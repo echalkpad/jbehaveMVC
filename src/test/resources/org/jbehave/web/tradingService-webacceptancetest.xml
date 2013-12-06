@@ -22,5 +22,10 @@
 	<bean id="showStatusStockPage" class="org.jbehave.web.ShowStockStatusPage">
 		<qualifier value="showStatusStockPage"></qualifier>
 	</bean>
+
+    <bean id="feedbackPage" class="org.jbehave.web.FeedbackPage">
+		<qualifier value="feedbackPage"></qualifier>
+        <property name="feedbackPageUrl" value="http://localhost:8080/feedback"></property>
+    </bean>
 	
 </beans>

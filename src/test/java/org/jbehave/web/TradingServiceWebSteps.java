@@ -2,10 +2,7 @@ package org.jbehave.web;
 
 import org.jbehave.business.Steps;
 import org.jbehave.business.StockAlertStatus;
-import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Named;
-import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
+import org.jbehave.core.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -21,7 +18,39 @@ public class TradingServiceWebSteps {
 	@Autowired
 	@Qualifier("showStatusStockPage")
 	private ShowStockStatusPage showStockStatusPage;
-	
+    @Autowired
+    @Qualifier("feedbackPage")
+    private FeedbackPage feedbackPage;
+
+    @AfterScenario
+    public void tearDown(){
+        insertStockPage.close();
+        feedbackPage.close();
+        showStockStatusPage.close();
+    }
+
+    @When("I submit a feedback with my name, '$recipientName' and '$feedback'")
+    public void newFeedbackSubmitted(@Named("recipientName") String recipientName, @Named("feedback") String feedback) {
+        feedbackPage.open();
+        feedbackPage.fillForm("my name", recipientName, feedback);
+        feedbackPage.submitForm();
+    }
+
+    @Then("I should see '$recipientName'")
+    public void shouldDisplayRecipientName(@Named("recipientName") String recipientName) {
+        assertThat(feedbackPage.getRecipientName(), is(recipientName));
+    }
+
+    @Then("I should see the message '$feedback'")
+    public void shouldDisplayFeedback(@Named("feedback") String feedback) {
+        assertThat(feedbackPage.getFeedbackMessage(),is(feedback));
+    }
+
+    @Then("I should see my '$myName'")
+    public void shouldDisplayMyName(@Named("myName") String myName) {
+        assertThat(feedbackPage.getMyName(), is(myName));
+    }
+
 	@Given("trader starts web application")
 	public void aNewStockCreated() {
 		insertStockPage.open();

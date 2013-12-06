@@ -1,9 +1,5 @@
 package org.jbehave.web;
 
-import static org.jbehave.core.io.CodeLocations.codeLocationFromPath;
-
-import java.util.List;
-
 import org.jbehave.core.InjectableEmbedder;
 import org.jbehave.core.annotations.Configure;
 import org.jbehave.core.annotations.UsingEmbedder;
@@ -15,10 +11,14 @@ import org.jbehave.core.steps.ParameterConverters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
+import static org.jbehave.core.io.CodeLocations.codeLocationFromPath;
+
 @RunWith(SpringAnnotatedEmbedderRunner.class)
 @Configure(parameterConverters=ParameterConverters.EnumConverter.class)
 @UsingEmbedder(embedder = Embedder.class, generateViewAfterStories = true, ignoreFailureInStories = false, ignoreFailureInView = false)
-@UsingSpring(resources = { "org/jbehave/business/configuration.xml",
+@UsingSpring(resources = { "org/jbehave/web/configuration.xml",
            "org/jbehave/web/tradingService-webacceptancetest.xml" })
 public class TraderIsAlertedWebStories extends InjectableEmbedder {
 
@@ -28,7 +28,11 @@ public class TraderIsAlertedWebStories extends InjectableEmbedder {
 	}
 
 	protected List<String> storyPaths() {
-		return new StoryFinder().findPaths(codeLocationFromPath("src/test/resources"), "org/jbehave/web/*.story", "");
-	}
+		return new StoryFinder().findPaths(codeLocationFromPath("src/test/resources"), "org/jbehave/web/user_submits_feedback_in_web.story", "");
+       // List<String> pathToStory = Arrays.asList("resources/org/jbehave/web/*.story");
+
+  //      List<String> pathToStory = Arrays.asList("resources/org/jbehave/web/user_submits_feedback_in_web.story");
+   //     return pathToStory;
+    }
 
 }

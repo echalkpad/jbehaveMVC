@@ -14,4 +14,7 @@ public class ShowStockStatusPage {
 		return pageUtils.getElementText(STATUS_ID);
 	}
 
+    public void close() {
+        pageUtils.close();
+    }
 }
